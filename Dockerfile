@@ -57,14 +57,14 @@ COPY Rprofile.site /etc/R/
 RUN R -e \
   "install.packages(c('repr', 'IRdisplay'), quiet = TRUE)"
 RUN R -e \
-  "devtools::install_github('IRkernel/IRkernel')"
+  "devtools::install_github('IRkernel/IRkernel', quiet = TRUE)"
 
 # Install Julia
 ENV JULIA_TARBALL https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
 RUN curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/local
 
 # Create non-root user for day-to-day work
-RUN useradd -c "Introduction to Julia" -u 1000 -s /bin/bash -m sportsdsl
+RUN useradd -c "Sports Data Science Lab" -u 1000 -s /bin/bash -m sportsdsl
 
 # Drop root
 USER sportsdsl
