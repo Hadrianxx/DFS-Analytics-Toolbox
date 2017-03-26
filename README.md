@@ -5,8 +5,8 @@
 2. Open a terminal / command line window on your Docker host. Type
 
     ```
-    git clone https://github.com/znmeb/introduction-to-julia.git
-    cd introduction-to-julia
+    git clone https://github.com/znmeb/sports-data-science-lab.git
+    cd sports-data-science-lab
     docker-compose up
     ```
    `docker-compose` will build the image if it's not on your machine, then bring up the `i2julia` service.
