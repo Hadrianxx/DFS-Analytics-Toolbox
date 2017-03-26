@@ -37,6 +37,7 @@ RUN apt-get update \
   bzip2 \
   curl \
   software-properties-common \
+  virtualenvwrapper \
   wget \
   && apt-get clean
 
@@ -47,33 +48,29 @@ RUN curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/lo
 # Create non-root user for day-to-day work
 RUN useradd -c "Introduction to Julia" -u 1000 -s /bin/bash -m i2julia
 
-# Install notebook start script
-COPY start-notebook.bash /home/i2julia/
-RUN chmod +x /home/i2julia/start-notebook.bash
-RUN chown -R i2julia:i2julia /home/i2julia
-
 # Drop root
 USER i2julia
 WORKDIR /home/i2julia
 
-# Install Miniconda
-# http://conda.pydata.org/miniconda.html
-# https://repo.continuum.io/miniconda
-ENV MINICONDA_REPO=https://repo.continuum.io/miniconda
-ENV MINICONDA_INSTALLER Miniconda3-latest-Linux-x86_64.sh
-ENV MINICONDA_PATH /home/i2julia/miniconda3/bin
-RUN wget -q $MINICONDA_REPO/$MINICONDA_INSTALLER \
-  && bash $MINICONDA_INSTALLER -b \
-  && rm $MINICONDA_INSTALLER
-ENV PATH $MINICONDA_PATH:$PATH
-RUN conda update --yes --all
-
-# Create environment with Jupyter and notebook presentation editor
-RUN conda create --name julia jupyter nbpresent
-
-# Install IJulia in the new environment
-ENV JUPYTER $MINICONDA_PATH/../envs/julia/bin/jupyter
-RUN source activate julia && julia -e 'Pkg.add("IJulia")'
+# Set up virtualenv
+ENV JUPYTER=/home/i2julia/.virtualenvs/julia/bin/jupyter
+RUN source /usr/share/virtualenvwrapper/virtualenvwrapper.sh \
+  && mkvirtualenv --python=/usr/bin/python3 julia \
+  && pip install jupyter nbpresent ipyparallel \
+  && jupyter nbextension install nbpresent --py --overwrite --user \
+  && jupyter nbextension enable nbpresent --py --user \
+  && jupyter serverextension enable nbpresent --py \
+  && jupyter nbextension install ipyparallel --py --overwrite --user \
+  && jupyter nbextension enable ipyparallel --py --user \
+  && jupyter serverextension enable ipyparallel --py \
+  && julia -e 'Pkg.add("IJulia")'
 
 # Expose notebook port
 EXPOSE 8888
+
+# Install notebook start scripts
+USER root
+COPY start*.bash /home/i2julia/
+RUN chmod +x /home/i2julia/start*.bash
+RUN chown -R i2julia:i2julia /home/i2julia
+USER i2julia

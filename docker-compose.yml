@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     image: docker.io/znmeb/i2julia
     user: i2julia
-    command: /home/i2julia/start-notebook.bash
+    command: /home/i2julia/startup.bash
     environment:
       - TERM
     ports:
