@@ -4,11 +4,6 @@
 FROM docker.io/ubuntu:xenial
 MAINTAINER M. Edward (Ed) Borasky <znmeb@znmeb.net>
 
-# Home base
-USER root
-RUN mkdir -p /usr/local/src/
-WORKDIR /usr/local/src/
-
 # Force "bash" shell - Conda doesn't work with "sh"
 RUN ln -f /bin/bash /bin/sh
 
@@ -63,33 +58,18 @@ RUN R -e \
 ENV JULIA_TARBALL https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
 RUN curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/local
 
-# Create non-root user for day-to-day work
-RUN useradd -c "Sports Data Science Lab" -u 1000 -s /bin/bash -m sportsdsl
-
-# Drop root
-USER sportsdsl
-WORKDIR /home/sportsdsl
-
-# Set up virtualenv
-ENV JUPYTER=/home/sportsdsl/.virtualenvs/julia/bin/jupyter
-RUN source /usr/share/virtualenvwrapper/virtualenvwrapper.sh \
-  && mkvirtualenv --python=/usr/bin/python3 julia \
-  && pip install jupyter nbpresent ipyparallel \
-  && jupyter nbextension install nbpresent --py --overwrite --user \
-  && jupyter nbextension enable nbpresent --py --user \
-  && jupyter serverextension enable nbpresent --py \
-  && jupyter nbextension install ipyparallel --py --overwrite --user \
-  && jupyter nbextension enable ipyparallel --py --user \
-  && jupyter serverextension enable ipyparallel --py \
-  && julia -e 'Pkg.add("IJulia")' \
-  && R -e 'IRkernel::installspec()'
-
 # Expose notebook port
 EXPOSE 8888
 
-# Install notebook start scripts
-USER root
-COPY start*.bash /home/sportsdsl/
-RUN chmod +x /home/sportsdsl/start*.bash
-RUN chown -R sportsdsl:sportsdsl /home/sportsdsl
-USER sportsdsl
+# Create non-root user for day-to-day work
+RUN useradd -c "Sports Data Science Lab" -u 1000 -s /bin/bash -m sportsdsl
+
+# Define virtualenvwrapper environment variables
+ENV SPORTSDSL_HOME /home/sportsdsl
+ENV WORKON_HOME $SPORTSDSL_HOME/Environments
+ENV PROJECT_HOME $SPORTSDSL_HOME/Projects
+ENV NOTEBOOK_HOME $SPORTSDSL_HOME/Notebooks
+
+# Collect scripts
+RUN mkdir -p /usr/local/src/Scripts
+COPY Scripts/*.bash /usr/local/src/Scripts/
