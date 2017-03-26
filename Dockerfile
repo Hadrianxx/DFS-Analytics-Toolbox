@@ -41,6 +41,24 @@ RUN apt-get update \
   wget \
   && apt-get clean
 
+# Install R
+RUN echo 'deb http://cran.rstudio.com/bin/linux/ubuntu xenial/' \
+  >> /etc/apt/sources.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+RUN add-apt-repository -y ppa:marutter/rrutter \
+  && add-apt-repository -y ppa:marutter/c2d4u \
+  && apt-get update \
+  && apt-get install -qqy --no-install-recommends \
+  r-base \
+  r-base-dev \
+  r-cran-devtools \
+  && apt-get clean
+COPY Rprofile.site /etc/R/
+RUN R -e \
+  "install.packages(c('repr', 'IRdisplay'), quiet = TRUE)"
+RUN R -e \
+  "devtools::install_github('IRkernel/IRkernel')"
+
 # Install Julia
 ENV JULIA_TARBALL https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
 RUN curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/local
@@ -63,7 +81,8 @@ RUN source /usr/share/virtualenvwrapper/virtualenvwrapper.sh \
   && jupyter nbextension install ipyparallel --py --overwrite --user \
   && jupyter nbextension enable ipyparallel --py --user \
   && jupyter serverextension enable ipyparallel --py \
-  && julia -e 'Pkg.add("IJulia")'
+  && julia -e 'Pkg.add("IJulia")' \
+  && R -e 'IRkernel::installspec()'
 
 # Expose notebook port
 EXPOSE 8888
