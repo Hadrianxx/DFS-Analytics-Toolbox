@@ -1,4 +1,4 @@
-# Sports Data Science Lab - Docker image
+# Sports Data Science Lab - sportsdsl
 
 ## Quick start
 1. Install Git and a Docker host. You will need both `docker` and `docker-compose`. I regularly test with Docker for Windows on Windows 10 Pro and on Fedora Linux 25 with the Fedora-provided Docker. This should work with any Docker host at release 1.12 or later.
@@ -9,4 +9,4 @@
     cd sports-data-science-lab
     docker-compose up
     ```
-   `docker-compose` will build the image if it's not on your machine, then bring up the `i2julia` service.
+   `docker-compose` will build the image if it's not on your machine, then bring up the `sportsdsl` service.

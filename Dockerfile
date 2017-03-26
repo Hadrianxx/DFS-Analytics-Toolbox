@@ -1,4 +1,4 @@
-# Copyright (C) 2016 M. Edward (Ed) Borasky <znmeb@znmeb.net>
+# Copyright (C) 2017 M. Edward (Ed) Borasky <znmeb@znmeb.net>
 # License: MIT
 
 FROM docker.io/ubuntu:xenial
@@ -64,14 +64,14 @@ ENV JULIA_TARBALL https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5
 RUN curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/local
 
 # Create non-root user for day-to-day work
-RUN useradd -c "Introduction to Julia" -u 1000 -s /bin/bash -m i2julia
+RUN useradd -c "Introduction to Julia" -u 1000 -s /bin/bash -m sportsdsl
 
 # Drop root
-USER i2julia
-WORKDIR /home/i2julia
+USER sportsdsl
+WORKDIR /home/sportsdsl
 
 # Set up virtualenv
-ENV JUPYTER=/home/i2julia/.virtualenvs/julia/bin/jupyter
+ENV JUPYTER=/home/sportsdsl/.virtualenvs/julia/bin/jupyter
 RUN source /usr/share/virtualenvwrapper/virtualenvwrapper.sh \
   && mkvirtualenv --python=/usr/bin/python3 julia \
   && pip install jupyter nbpresent ipyparallel \
@@ -89,7 +89,7 @@ EXPOSE 8888
 
 # Install notebook start scripts
 USER root
-COPY start*.bash /home/i2julia/
-RUN chmod +x /home/i2julia/start*.bash
-RUN chown -R i2julia:i2julia /home/i2julia
-USER i2julia
+COPY start*.bash /home/sportsdsl/
+RUN chmod +x /home/sportsdsl/start*.bash
+RUN chown -R sportsdsl:sportsdsl /home/sportsdsl
+USER sportsdsl
