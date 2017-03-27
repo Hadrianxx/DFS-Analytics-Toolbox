@@ -5,4 +5,4 @@
 source $VIRTUALENVWRAPPER_SCRIPT \
   && workon julia \
   && ipcluster nbextension enable --user \
-  && ipcluster start
+  && ipcluster start --daemonize

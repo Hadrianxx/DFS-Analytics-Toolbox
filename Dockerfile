@@ -4,10 +4,6 @@
 FROM docker.io/ubuntu:xenial
 MAINTAINER M. Edward (Ed) Borasky <znmeb@znmeb.net>
 
-# Use logfiles for quietness
-ENV LOGFILES /usr/local/src/logfiles
-RUN mkdir -p $LOGFILES
-
 # Set up locales
 RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
   && locale-gen \
@@ -47,20 +43,18 @@ RUN apt-get update > $LOGFILES/update.log \
   virtualenv \
   virtualenvwrapper \
   wget \
-  > $LOGFILES/install.log \
   && apt-get clean
 RUN add-apt-repository -y ppa:marutter/rrutter \
   && add-apt-repository -y ppa:marutter/c2d4u \
   && apt-get update > $LOGFILES/update2.log \
   && apt-get install -qqy --no-install-recommends \
   r-cran-devtools \
-  > $LOGFILES/devtools.log \
   && apt-get clean
 
 # Install R packages
 COPY Rprofile.site /etc/R/
 RUN R -e "install.packages(c('repr', 'IRdisplay'), quiet = TRUE)"
-RUN R -e "devtools::install_github('IRkernel/IRkernel', quiet = TRUE)" > $LOGFILES/irkernelpkg.log 2>&1
+RUN R -e "devtools::install_github('IRkernel/IRkernel', quiet = TRUE)"
 
 # Install Julia
 ENV JULIA_TARBALL https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
@@ -70,13 +64,11 @@ RUN curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/lo
 EXPOSE 8888
 
 # Create non-root user for day-to-day work
-RUN useradd -c "Sports Data Science Lab" -u 1000 -s /bin/bash -m dfstools
-ENV DFSTOOLS_LOGFILES /usr/local/src/dfstools_logfiles
-RUN mkdir -p $DFSTOOLS_LOGFILES
-RUN chown -R dfstools:dfstools $DFSTOOLS_LOGFILES
+RUN useradd -c "DFS Analytics Toolbox" -u 1000 -s /bin/bash -m dfstools
 
 # Define virtualenvwrapper environment variables
 ENV VIRTUALENVWRAPPER_SCRIPT /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+ENV VIRTUALENVWRAPPER_PYTHON /usr/bin/python
 ENV DFSTOOLS_HOME /home/dfstools
 ENV WORKON_HOME $DFSTOOLS_HOME/.virtualenvs
 
@@ -86,16 +78,17 @@ WORKDIR $DFSTOOLS_HOME
 SHELL [ "/bin/bash", "-c" ]
 RUN source $VIRTUALENVWRAPPER_SCRIPT \
   && mkvirtualenv --python=/usr/bin/python3 julia \
-  && pip3 upgrade pip \
-  && pip3 install jupyter nbpresent ipyparallel virtualenv > $DFSTOOLS_LOGFILES/pipinstall.log 2>&1 \
+  && pip3 install jupyter nbpresent ipyparallel \
   && jupyter nbextension install nbpresent --py --overwrite --user \
   && jupyter nbextension enable nbpresent --py --user \
   && jupyter serverextension enable nbpresent --py \
   && jupyter nbextension install ipyparallel --py --overwrite --user \
   && jupyter nbextension enable ipyparallel --py --user \
   && jupyter serverextension enable ipyparallel --py \
-  && julia -e 'Pkg.add("IJulia")' > $DFSTOOLS_LOGFILES/ijulia.log 2>&1 \
-  && R -e 'IRkernel::installspec()' > $DFSTOOLS_LOGFILES/irkernel.log
+  && julia -e 'Pkg.add("IJulia")' \
+  && R -e 'IRkernel::installspec()' \
+  && ipython profile create \
+  && echo "source $VIRTUALENVWRAPPER_SCRIPT" >> ~/.bashrc
 
 # Save user desktop for restore into host home volume
 USER root
