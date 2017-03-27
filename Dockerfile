@@ -74,10 +74,7 @@ WORKDIR $SPORTSDSL_HOME
 SHELL [ "/bin/bash", "-c" ]
 RUN source $VIRTUALENVWRAPPER_SCRIPT \
   && mkvirtualenv --python=/usr/bin/python3 julia \
-  && pip install jupyter nbpresent ipyparallel \
-  && jupyter nbextension install nbpresent --py --overwrite --user \
-  && jupyter nbextension enable nbpresent --py --user \
-  && jupyter serverextension enable nbpresent --py \
+  && pip install jupyter ipyparallel \
   && jupyter nbextension install ipyparallel --py --overwrite --user \
   && jupyter nbextension enable ipyparallel --py --user \
   && jupyter serverextension enable ipyparallel --py \
