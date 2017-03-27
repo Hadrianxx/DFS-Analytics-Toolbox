@@ -77,11 +77,12 @@ RUN source $VIRTUALENVWRAPPER_SCRIPT \
   && pip3 install jupyter nbpresent ipyparallel \
   && ipython profile create --parallel \
   && jupyter nbextension install nbpresent --py --overwrite --user \
-  && jupyter nbextension enable nbpresent --py --user \
-  && jupyter serverextension enable nbpresent --py \
   && jupyter nbextension install ipyparallel --py --overwrite --user \
+  && jupyter nbextension enable nbpresent --py --user \
   && jupyter nbextension enable ipyparallel --py --user \
+  && jupyter serverextension enable nbpresent --py \
   && jupyter serverextension enable ipyparallel --py \
+  && ipcluster nbextension enable --user \
   && julia -e 'Pkg.add("IJulia")' \
   && R -e 'IRkernel::installspec()' \
   && echo "source $VIRTUALENVWRAPPER_SCRIPT" >> ~/.bashrc \
@@ -91,5 +92,3 @@ RUN source $VIRTUALENVWRAPPER_SCRIPT \
 USER root
 RUN mkdir -p /usr/local/src/Scripts
 COPY Scripts/*.bash /usr/local/src/Scripts/
-USER dfstools
-WORKDIR $DFSTOOLS_HOME
