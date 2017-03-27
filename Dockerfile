@@ -10,9 +10,9 @@ ENV JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5
   VIRTUALENVWRAPPER_PYTHON=/usr/bin/python \
   DFSTOOLS_HOME=/home/dfstools \
   DFSTOOLS_BACKUP=/usr/local/src/dfstools \
-  DFSTOOLS_HOME_TARBALL=$DFSTOOLS_BACKUP/dfstools.tgz \
-  WORKON_HOME=$DFSTOOLS_HOME/.virtualenvs \
-  JUPYTER=$WORKON_HOME/julia/bin/jupyter
+  DFSTOOLS_HOME_TARBALL=/usr/local/src/dfstools/dfstools.tgz \
+  WORKON_HOME=/home/dfstools/.virtualenvs \
+  JUPYTER=/home/dfstools/.virtualenvs/julia/bin/jupyter
 
 # Expose notebook port
 EXPOSE 8888
@@ -91,3 +91,5 @@ RUN source $VIRTUALENVWRAPPER_SCRIPT \
 USER root
 RUN mkdir -p /usr/local/src/Scripts
 COPY Scripts/*.bash /usr/local/src/Scripts/
+USER dfstools
+WORKDIR $DFSTOOLS_HOME
