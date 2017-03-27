@@ -5,4 +5,5 @@
 source $VIRTUALENVWRAPPER_SCRIPT \
   && workon julia \
   && ipcluster nbextension enable --user \
+  && ipython profile create \
   && ipcluster start --daemonize
