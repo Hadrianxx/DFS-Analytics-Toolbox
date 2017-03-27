@@ -13,7 +13,6 @@ services:
       - TERM
     ports:
       - "8888:8888"
-    privileged: true
     volumes:
       - $HOST_HOME_DFSTOOLS:/home/dfstools:rw
-    command: /usr/local/src/Scripts/root-startup.bash
+    command: /usr/local/src/Scripts/dfstools-startup.bash
