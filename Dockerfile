@@ -81,11 +81,13 @@ SHELL [ "/bin/bash", "-c" ]
 RUN \
   source $VIRTUALENVWRAPPER_SCRIPT \
   && mkvirtualenv --python=/usr/bin/python3 julia \
-  && pip3 install jupyter nbpresent ipyparallel \
+  && pip3 install jupyter nbpresent ipyparallel RISE \
   && jupyter nbextension install nbpresent --py --overwrite --user \
   && jupyter nbextension enable nbpresent --py --user \
   && jupyter serverextension enable nbpresent --py \
   && ipcluster nbextension enable --user \
+  && jupyter nbextension install rise --py --overwrite --user \
+  && jupyter nbextension enable rise --py --user \
   && julia -e 'Pkg.add("IJulia")' \
   && R -e 'IRkernel::installspec()' \
   && echo "source $VIRTUALENVWRAPPER_SCRIPT" >> ~/.bashrc \
