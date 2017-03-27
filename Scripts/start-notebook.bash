@@ -2,6 +2,6 @@
 # Copyright (C) 2017 M. Edward (Ed) Borasky <znmeb@znmeb.net>
 # License: MIT
 
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh \
+source $VIRTUALENVWRAPPER_SCRIPT \
   && workon julia \
   && jupyter notebook --no-browser --ip=0.0.0.0

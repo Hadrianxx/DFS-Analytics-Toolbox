@@ -2,7 +2,7 @@
 # Copyright (C) 2017 M. Edward (Ed) Borasky <znmeb@znmeb.net>
 # License: MIT
 
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh \
+source $VIRTUALENVWRAPPER_SCRIPT \
   && mkvirtualenv --python=/usr/bin/python3 julia \
   && pip install jupyter nbpresent ipyparallel \
   && jupyter nbextension install nbpresent --py --overwrite --user \

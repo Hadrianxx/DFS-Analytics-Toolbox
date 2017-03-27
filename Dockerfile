@@ -4,9 +4,6 @@
 FROM docker.io/ubuntu:xenial
 MAINTAINER M. Edward (Ed) Borasky <znmeb@znmeb.net>
 
-# Force "bash" shell - Conda doesn't work with "sh"
-RUN ln -f /bin/bash /bin/sh
-
 # Set up locales
 RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
 RUN locale-gen
@@ -65,10 +62,34 @@ EXPOSE 8888
 RUN useradd -c "Sports Data Science Lab" -u 1000 -s /bin/bash -m sportsdsl
 
 # Define virtualenvwrapper environment variables
+ENV VIRTUALENVWRAPPER_SCRIPT /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 ENV SPORTSDSL_HOME /home/sportsdsl
 ENV WORKON_HOME $SPORTSDSL_HOME/Environments
 ENV PROJECT_HOME $SPORTSDSL_HOME/Projects
 ENV NOTEBOOK_HOME $SPORTSDSL_HOME/Notebooks
+
+# Install the notebook services
+USER sportsdsl
+WORKDIR $SPORTSDSL_HOME
+SHELL [ "/bin/bash", "-c" ]
+RUN source $VIRTUALENVWRAPPER_SCRIPT \
+  && mkvirtualenv --python=/usr/bin/python3 julia \
+  && pip install jupyter nbpresent ipyparallel \
+  && jupyter nbextension install nbpresent --py --overwrite --user \
+  && jupyter nbextension enable nbpresent --py --user \
+  && jupyter serverextension enable nbpresent --py \
+  && jupyter nbextension install ipyparallel --py --overwrite --user \
+  && jupyter nbextension enable ipyparallel --py --user \
+  && jupyter serverextension enable ipyparallel --py \
+  && julia -e 'Pkg.add("IJulia")' \
+  && R -e 'IRkernel::installspec()'
+RUN mkdir -p $NOTEBOOK_HOME
+RUN mkdir -p $PROJECT_HOME
+
+# Save user desktop for restore into host home volume
+USER root
+ENV SPORTSDSL_HOME_TARBALL /usr/local/src/sportsdsl.tgz
+RUN tar czvf $SPORTSDSL_HOME_TARBALL $SPORTSDSL_HOME
 
 # Collect scripts
 RUN mkdir -p /usr/local/src/Scripts

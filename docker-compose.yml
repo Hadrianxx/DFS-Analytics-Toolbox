@@ -8,9 +8,12 @@ services:
       context: .
       dockerfile: Dockerfile
     image: docker.io/znmeb/sportsdsl
-    user: sportsdsl
-    command: /home/sportsdsl/startup.bash
     environment:
+      - HOST_HOME_SPORTSDSL
       - TERM
     ports:
       - "8888:8888"
+    privileged: true
+    volumes:
+      - $HOST_HOME_SPORTSDSL:/home/sportsdsl:rw
+    command: /usr/local/src/Scripts/root-startup.bash
