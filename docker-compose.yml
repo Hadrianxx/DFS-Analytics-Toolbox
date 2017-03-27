@@ -1,19 +1,19 @@
-# Copyright (C) 2017 M. Edward (Ed) Borasky <znmeb@znmeb.net>
+# SDSLAB - Copyright (C) 2017 M. Edward (Ed) Borasky <znmeb@znmeb.net>
 # License: MIT
 
 version: '2.1'
 services:
-  sportsdsl:
+  sdslab:
     build:
       context: .
       dockerfile: Dockerfile
-    image: docker.io/znmeb/sportsdsl
+    image: docker.io/znmeb/sdslab
     environment:
-      - HOST_HOME_SPORTSDSL
+      - HOST_HOME_SDSLAB
       - TERM
     ports:
       - "8888:8888"
     privileged: true
     volumes:
-      - $HOST_HOME_SPORTSDSL:/home/sportsdsl:rw
+      - $HOST_HOME_SDSLAB:/home/sdslab:rw
     command: /usr/local/src/Scripts/root-startup.bash

@@ -4,6 +4,7 @@
 
 source $VIRTUALENVWRAPPER_SCRIPT \
   && mkvirtualenv --python=/usr/bin/python3 julia \
+  && pip3 install --upgrade pip \
   && pip install jupyter nbpresent ipyparallel \
   && jupyter nbextension install nbpresent --py --overwrite --user \
   && jupyter nbextension enable nbpresent --py --user \
