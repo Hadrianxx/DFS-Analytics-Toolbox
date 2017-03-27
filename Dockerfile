@@ -5,7 +5,8 @@ FROM docker.io/ubuntu:xenial
 MAINTAINER M. Edward (Ed) Borasky <znmeb@znmeb.net>
 
 # Global environment variables
-ENV JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz \
+ENV \
+  JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz \
   VIRTUALENVWRAPPER_SCRIPT=/usr/share/virtualenvwrapper/virtualenvwrapper.sh \
   VIRTUALENVWRAPPER_PYTHON=/usr/bin/python \
   DFSTOOLS_HOME=/home/dfstools \
@@ -18,7 +19,8 @@ ENV JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5
 EXPOSE 8888
 
 # Set up locales
-RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
+RUN \
+  echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
   && locale-gen \
   && update-locale LANG=en_US.UTF-8 \
   && update-locale LC_CTYPE=en_US.UTF-8 \
@@ -36,7 +38,8 @@ RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
   && update-locale LC_ALL=en_US.UTF-8
 
 # Install base Ubuntu packages
-RUN echo 'deb http://cran.rstudio.com/bin/linux/ubuntu xenial/' >> /etc/apt/sources.list \
+RUN \
+  echo 'deb http://cran.rstudio.com/bin/linux/ubuntu xenial/' >> /etc/apt/sources.list \
   && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 \
   && apt-get update > $LOGFILES/update.log \
   && apt-get upgrade -y > $LOGFILES/upgrade.log \
@@ -44,11 +47,13 @@ RUN echo 'deb http://cran.rstudio.com/bin/linux/ubuntu xenial/' >> /etc/apt/sour
   build-essential \
   bzip2 \
   curl \
+  git \
   python-virtualenv \
   python3-virtualenv \
   r-base \
   r-base-dev \
   software-properties-common \
+  vim-tiny \
   virtualenv \
   virtualenvwrapper \
   wget \
@@ -61,7 +66,8 @@ RUN echo 'deb http://cran.rstudio.com/bin/linux/ubuntu xenial/' >> /etc/apt/sour
 
 # Install the rest of the system-level components
 COPY Rprofile.site /etc/R/
-RUN R -e "install.packages(c('repr', 'IRdisplay'), quiet = TRUE)" \
+RUN \
+  R -e "install.packages(c('repr', 'IRdisplay'), quiet = TRUE)" \
   && R -e "devtools::install_github('IRkernel/IRkernel', quiet = TRUE)" \
   && curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/local \
   && useradd -c "DFS Analytics Toolbox" -u 1000 -s /bin/bash -m dfstools \
@@ -72,20 +78,18 @@ RUN R -e "install.packages(c('repr', 'IRdisplay'), quiet = TRUE)" \
 USER dfstools
 WORKDIR $DFSTOOLS_HOME
 SHELL [ "/bin/bash", "-c" ]
-RUN source $VIRTUALENVWRAPPER_SCRIPT \
+RUN \
+  source $VIRTUALENVWRAPPER_SCRIPT \
   && mkvirtualenv --python=/usr/bin/python3 julia \
   && pip3 install jupyter nbpresent ipyparallel \
-  && ipython profile create --parallel \
   && jupyter nbextension install nbpresent --py --overwrite --user \
-  && jupyter nbextension install ipyparallel --py --overwrite --user \
   && jupyter nbextension enable nbpresent --py --user \
-  && jupyter nbextension enable ipyparallel --py --user \
   && jupyter serverextension enable nbpresent --py \
-  && jupyter serverextension enable ipyparallel --py \
   && ipcluster nbextension enable --user \
   && julia -e 'Pkg.add("IJulia")' \
   && R -e 'IRkernel::installspec()' \
   && echo "source $VIRTUALENVWRAPPER_SCRIPT" >> ~/.bashrc \
+  && echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python" >> ~/.bashrc \
   && tar czf $DFSTOOLS_HOME_TARBALL $DFSTOOLS_HOME
 
 # Collect scripts

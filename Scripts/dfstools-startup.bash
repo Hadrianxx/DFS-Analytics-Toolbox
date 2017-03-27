@@ -4,6 +4,4 @@
 
 source $VIRTUALENVWRAPPER_SCRIPT \
   && workon julia \
-  && ipcluster start --daemonize \
-  && sleep 30 \
   && jupyter notebook --no-browser --ip=0.0.0.0
