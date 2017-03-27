@@ -1,4 +1,4 @@
-# SDSLAB - Copyright (C) 2017 M. Edward (Ed) Borasky <znmeb@znmeb.net>
+# DFSTOOLS - Copyright (C) 2017 M. Edward (Ed) Borasky <znmeb@znmeb.net>
 # License: MIT
 
 FROM docker.io/ubuntu:xenial
@@ -70,37 +70,37 @@ RUN curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/lo
 EXPOSE 8888
 
 # Create non-root user for day-to-day work
-RUN useradd -c "Sports Data Science Lab" -u 1000 -s /bin/bash -m sdslab
-ENV SDSLAB_LOGFILES /usr/local/src/sdslab_logfiles
-RUN mkdir -p $SDSLAB_LOGFILES
-RUN chown -R sdslab:sdslab $SDSLAB_LOGFILES
+RUN useradd -c "Sports Data Science Lab" -u 1000 -s /bin/bash -m dfstools
+ENV DFSTOOLS_LOGFILES /usr/local/src/dfstools_logfiles
+RUN mkdir -p $DFSTOOLS_LOGFILES
+RUN chown -R dfstools:dfstools $DFSTOOLS_LOGFILES
 
 # Define virtualenvwrapper environment variables
 ENV VIRTUALENVWRAPPER_SCRIPT /usr/share/virtualenvwrapper/virtualenvwrapper.sh
-ENV SDSLAB_HOME /home/sdslab
-ENV WORKON_HOME $SDSLAB_HOME/.virtualenvs
+ENV DFSTOOLS_HOME /home/dfstools
+ENV WORKON_HOME $DFSTOOLS_HOME/.virtualenvs
 
 # Install the notebook services
-USER sdslab
-WORKDIR $SDSLAB_HOME
+USER dfstools
+WORKDIR $DFSTOOLS_HOME
 SHELL [ "/bin/bash", "-c" ]
 RUN source $VIRTUALENVWRAPPER_SCRIPT \
   && mkvirtualenv --python=/usr/bin/python3 julia \
   && pip3 upgrade pip \
-  && pip3 install jupyter nbpresent ipyparallel virtualenv > $SDSLAB_LOGFILES/pipinstall.log 2>&1 \
+  && pip3 install jupyter nbpresent ipyparallel virtualenv > $DFSTOOLS_LOGFILES/pipinstall.log 2>&1 \
   && jupyter nbextension install nbpresent --py --overwrite --user \
   && jupyter nbextension enable nbpresent --py --user \
   && jupyter serverextension enable nbpresent --py \
   && jupyter nbextension install ipyparallel --py --overwrite --user \
   && jupyter nbextension enable ipyparallel --py --user \
   && jupyter serverextension enable ipyparallel --py \
-  && julia -e 'Pkg.add("IJulia")' > $SDSLAB_LOGFILES/ijulia.log 2>&1 \
-  && R -e 'IRkernel::installspec()' > $SDSLAB_LOGFILES/irkernel.log
+  && julia -e 'Pkg.add("IJulia")' > $DFSTOOLS_LOGFILES/ijulia.log 2>&1 \
+  && R -e 'IRkernel::installspec()' > $DFSTOOLS_LOGFILES/irkernel.log
 
 # Save user desktop for restore into host home volume
 USER root
-ENV SDSLAB_HOME_TARBALL /usr/local/src/sdslab.tgz
-RUN tar czf $SDSLAB_HOME_TARBALL $SDSLAB_HOME
+ENV DFSTOOLS_HOME_TARBALL /usr/local/src/dfstools.tgz
+RUN tar czf $DFSTOOLS_HOME_TARBALL $DFSTOOLS_HOME
 
 # Collect scripts
 RUN mkdir -p /usr/local/src/Scripts
