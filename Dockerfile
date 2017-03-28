@@ -7,7 +7,7 @@ MAINTAINER M. Edward (Ed) Borasky <znmeb@znmeb.net>
 # Global environment variables
 ENV \
   JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz \
-  VIRTUALENVWRAPPER_SCRIPT=/usr/share/virtualenvwrapper/virtualenvwrapper.sh \
+  VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh \
   VIRTUALENVWRAPPER_PYTHON=/usr/bin/python \
   DFSTOOLS_HOME=/home/dfstools \
   DFSTOOLS_BACKUP=/usr/local/src/dfstools \
@@ -48,14 +48,14 @@ RUN \
   bzip2 \
   curl \
   git \
-  python-virtualenv \
-  python3-virtualenv \
+  python-pip \
+  python3-pip \
+  python-setuptools \
+  python3-setuptools \
   r-base \
   r-base-dev \
   software-properties-common \
   vim-tiny \
-  virtualenv \
-  virtualenvwrapper \
   wget \
   && add-apt-repository -y ppa:marutter/rrutter \
   && add-apt-repository -y ppa:marutter/c2d4u \
@@ -82,6 +82,10 @@ RUN \
   r-cran-tidyr \
   r-cran-xml2 \
   && apt-get clean
+
+RUN \
+  pip install --upgrade pip \
+  && pip install virtualenvwrapper
 
 # Install the rest of the system-level components
 COPY Rprofile.site /etc/R/
