@@ -5,9 +5,9 @@
 
 2. The Docker image is "read-only" - it contains the platform software and a user home workspace, but doesn't retain data after the container shuts down. You can upload and download notebooks, but a persistent workspace shared with the host is more convenient.
 
-    The DFS Analytics Toolbox mounts a host directory onto the home directory of the container user `dfstools` user ID 1000. The `docker-compose` step looks at the environment variable `HOST_HOME_DFSTOOLS` to get the directory name. For example, on my test runs I use `export HOST_HOME_DFSTOOLS="~/snarfblatt".
+    The DFS Analytics Toolbox mounts a host directory onto the home directory of the container user `dfstools` user - user ID 1000. The `docker-compose` step looks at the environment variable `HOST_HOME_DFSTOOLS` to get the directory name. For example, on my test runs I use `export HOST_HOME_DFSTOOLS="~/snarfblatt"`.
 
-    If the directory does not exist, `docker-compose` will create a new empty one. If it is empty when the service starts, the script `/usr/local/src/Scripts/root-startup.bash` will initialize it with the required software before starting the notebook server. Otherwise, the notebook server will use whatever's there.
+    If the directory does not exist, `docker-compose` will create a new empty one. If it is empty when the `dfstools` service starts, the script `/usr/local/src/Scripts/root-startup.bash` will initialize it with the required software before starting the notebook server. Otherwise, the notebook server will use whatever's there.
 
 3. Open a terminal / command line window on your Docker host. Type
 
@@ -30,23 +30,26 @@
 
     Open the URL in your browser and you'll be using the notebook server. On my GNOME terminal, you can right-click on the lick and select "Open Link"!
 
-5. When you're done, log out of all your notebook browser windows / tab and press `CTRL-C` in the terminal. The notebook server will shut down. To restart it, just make sure the `HOST_HOME_DFSTOOLS` environment variable is set and type `docker-compose up`.
+5. When you're done, log out of all your notebook browser windows / tabs and press `CTRL-C` in the terminal. The notebook server will shut down. To restart it, just make sure the `HOST_HOME_DFSTOOLS` environment variable is set and type `docker-compose up`.
 
 ## What's in the box?
+* Licensing: this repository is MIT licensed. However, many of the components have other licenses.
 * [Ubuntu 16.04.x LTS "Xenial Xerus"](https://store.docker.com/images/414e13de-f1ba-40d0-9867-08f2e5884b3f?tab=description)
 * [Python `virtualenvwrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/)
 * [R repositories from CRAN's Ubuntu page](https://cran.rstudio.com/bin/linux/ubuntu/)
 * R, devtools and the R notebook kernel packages. It does ***not*** have the `tidyverse` yet!
 * Julia from the [Julia binary download page](http://julialang.org/downloads/) and [the `IJulia` kernel Julia package](https://github.com/JuliaLang/IJulia.jl)
-* A `julia` virtual environment containing
+* A `julia` virtual environment in the `dfstools` home directory containing
     * [Jupyter notebook server](https://jupyter.org/) with Python 3, R and Julia kernels
     * A working [IPython Clusters](https://ipyparallel.readthedocs.io/en/latest/) tab!
     * The [RISE](https://github.com/damianavila/RISE) and [nbpresent](https://github.com/Anaconda-Platform/nbpresent) slideshow tools
 
-## TBD
-1. Docker for Windows hosting test / documentation
-2. Add the R tidyverse
-3. Tutorial for `nbpresent`
-4. PostgreSQL interface
-5. Your feature here! <https://github.com/znmeb/DFS-Analytics-Toolbox/issues/new>
-6. And, of course, actual DFS analytics content!
+## TBD (sort of prioritized)
+1. Add the R tidyverse
+1. Docker for Windows (Windows 10 Pro Hyper-V) hosting test / documentation
+1. Tutorial for `nbpresent`
+1. Docker via VirtualBox hosting test / documentation
+1. [PostgreSQL](https://store.docker.com/images/022689bf-dfd8-408f-9e1c-19acac32e57b?tab=description)
+1. [Redis](https://store.docker.com/images/1f6ef28b-3e48-4da1-b838-5bd8710a2053?tab=description)
+1. Your feature here! <https://github.com/znmeb/DFS-Analytics-Toolbox/issues/new>
+1. And, of course, actual DFS analytics content!
