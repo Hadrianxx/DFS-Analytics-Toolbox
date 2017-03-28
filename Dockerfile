@@ -61,13 +61,32 @@ RUN \
   && add-apt-repository -y ppa:marutter/c2d4u \
   && apt-get update > $LOGFILES/update2.log \
   && apt-get install -qqy --no-install-recommends \
+  r-cran-broom \
   r-cran-devtools \
+  r-cran-dplyr \
+  r-cran-forcats \
+  r-cran-ggplot2 \
+  r-cran-haven \
+  r-cran-httr \
+  r-cran-hms \
+  r-cran-jsonlite \
+  r-cran-lubridate \
+  r-cran-magrittr \
+  r-cran-modelr \
+  r-cran-purrr \
+  r-cran-readr \
+  r-cran-readxl \
+  r-cran-stringr \
+  r-cran-tibble \
+  r-cran-rvest \
+  r-cran-tidyr \
+  r-cran-xml2 \
   && apt-get clean
 
 # Install the rest of the system-level components
 COPY Rprofile.site /etc/R/
 RUN \
-  R -e "install.packages(c('repr', 'IRdisplay'), quiet = TRUE)" \
+  R -e "install.packages(c('tidyverse', 'repr', 'IRdisplay'), quiet = TRUE)" \
   && R -e "devtools::install_github('IRkernel/IRkernel', quiet = TRUE)" \
   && curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/local \
   && useradd -c "DFS Analytics Toolbox" -u 1000 -s /bin/bash -m dfstools \
