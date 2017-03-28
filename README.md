@@ -50,5 +50,3 @@
 4. PostgreSQL interface
 5. Your feature here! <https://github.com/znmeb/DFS-Analytics-Toolbox/issues/new>
 6. And, of course, actual DFS analytics content!
-
-TBD
