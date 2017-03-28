@@ -56,5 +56,6 @@ The Docker image is "read-only" - it contains the platform software and a user h
 1. Docker via VirtualBox hosting test / documentation
 1. [PostgreSQL](https://store.docker.com/images/022689bf-dfd8-408f-9e1c-19acac32e57b?tab=description) back end
 1. [Redis](https://store.docker.com/images/1f6ef28b-3e48-4da1-b838-5bd8710a2053?tab=description) back end
+1. Miniconda "port" ... I won't do Miniconda in a Docker image because it's too big, but it makes sense on the desktop.
 1. Your feature here! <https://github.com/znmeb/DFS-Analytics-Toolbox/issues/new>
 1. And, of course, actual DFS analytics content!
