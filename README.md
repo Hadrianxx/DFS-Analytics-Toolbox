@@ -18,7 +18,7 @@
     docker-compose up --build
     ```
 
-   `docker-compose` will build the image if it's not on your machine, then bring up the `dfstools` service.
+   `docker-compose` will build the image if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.2 GB.
 
 2. When the notebook server is ready, you'll see a line like
 
