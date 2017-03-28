@@ -4,7 +4,7 @@
 Install Git and a Docker host. You will need both `docker` and `docker-compose`. I develop/test on Fedora Linux 25 with the Fedora-provided `docker` and `docker-compose`. This should work with any `docker` 1.12.6 or later and `docker-compose` 1.9.0 or later.
 
 ## The persistent workspace mechanism
-The Docker image is "read-only" - it contains the platform software and a user home workspace. You can upload and download notebooks while the service is running, but `docker-compose` doesn't retain data after it shuts the container down. I've found that a persistent workspace shared with the host is more convenient.
+The Docker image contains the platform software and a user home workspace. You can run the service and upload and download notebooks while the service is running, but `docker-compose` doesn't retain data after it shuts the container down. I've found that a persistent workspace shared with the host is more convenient.
 
     During the image build, `docker` creates a full Jupyter notebook server virtual environment in the `dfstools` user's home directory. As the last step of this install, `docker` creates a tarball of the `dfstools` user home directory and saves it in the image.
 
@@ -52,10 +52,11 @@ The Docker image is "read-only" - it contains the platform software and a user h
 
 ## TBD (sort of prioritized)
 1. Docker for Windows (Windows 10 Pro Hyper-V) hosting test / documentation
+1. Docker Hub autobuild for the image
 1. Tutorial for `nbpresent`
 1. Docker via VirtualBox hosting test / documentation
+1. Your feature here! <https://github.com/znmeb/DFS-Analytics-Toolbox/issues/new>
 1. [PostgreSQL](https://store.docker.com/images/022689bf-dfd8-408f-9e1c-19acac32e57b?tab=description) back end
 1. [Redis](https://store.docker.com/images/1f6ef28b-3e48-4da1-b838-5bd8710a2053?tab=description) back end
 1. Miniconda "port" ... I won't do Miniconda in a Docker image because it's too big, but it makes sense on the desktop.
-1. Your feature here! <https://github.com/znmeb/DFS-Analytics-Toolbox/issues/new>
 1. And, of course, actual DFS analytics content!
