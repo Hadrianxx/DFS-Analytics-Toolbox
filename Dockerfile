@@ -4,20 +4,6 @@
 FROM docker.io/ubuntu:xenial
 MAINTAINER M. Edward (Ed) Borasky <znmeb@znmeb.net>
 
-# Global environment variables
-ENV \
-  JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz \
-  VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh \
-  VIRTUALENVWRAPPER_PYTHON=/usr/bin/python \
-  DFSTOOLS_HOME=/home/dfstools \
-  DFSTOOLS_BACKUP=/usr/local/src/dfstools \
-  DFSTOOLS_HOME_TARBALL=/usr/local/src/dfstools/dfstools.tgz \
-  WORKON_HOME=/home/dfstools/.virtualenvs \
-  JUPYTER=/home/dfstools/.virtualenvs/julia/bin/jupyter
-
-# Expose notebook port
-EXPOSE 8888
-
 # Set up locales
 RUN \
   echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
@@ -41,13 +27,15 @@ RUN \
 RUN \
   echo 'deb http://cran.rstudio.com/bin/linux/ubuntu xenial/' >> /etc/apt/sources.list \
   && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 \
-  && apt-get update > $LOGFILES/update.log \
-  && apt-get upgrade -y > $LOGFILES/upgrade.log \
+  && apt-get update \
+  && apt-get upgrade -y \
   && apt-get install -qqy --no-install-recommends \
   build-essential \
   bzip2 \
   curl \
   git \
+  python-dev \
+  python3-dev \
   python-pip \
   python3-pip \
   python-setuptools \
@@ -59,7 +47,7 @@ RUN \
   wget \
   && add-apt-repository -y ppa:marutter/rrutter \
   && add-apt-repository -y ppa:marutter/c2d4u \
-  && apt-get update > $LOGFILES/update2.log \
+  && apt-get update \
   && apt-get install -qqy --no-install-recommends \
   r-cran-broom \
   r-cran-devtools \
@@ -83,28 +71,35 @@ RUN \
   r-cran-xml2 \
   && apt-get clean
 
+# Python virtual environment / project manager
 RUN \
   pip install --upgrade pip \
   && pip install virtualenvwrapper
 
 # Install the rest of the system-level components
 COPY Rprofile.site /etc/R/
+ENV JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
 RUN \
   R -e "install.packages(c('tidyverse', 'repr', 'IRdisplay'), quiet = TRUE)" \
   && R -e "devtools::install_github('IRkernel/IRkernel', quiet = TRUE)" \
   && curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/local \
-  && useradd -c "DFS Analytics Toolbox" -u 1000 -s /bin/bash -m dfstools \
-  && mkdir -p $DFSTOOLS_BACKUP \
-  && chown -R dfstools:dfstools $DFSTOOLS_BACKUP
+  && useradd -c "DFS Analytics Toolbox" -u 1000 -s /bin/bash -m dfstools
 
 # Install user components
+ENV \
+  DFSTOOLS_HOME=/home/dfstools \
+  VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh \
+  PROJECT_HOME=home/dfstools/Projects \
+  WORKON_HOME=/home/dfstools/.virtualenvs \
+  JUPYTER=/home/dfstools/.virtualenvs/dfstools/bin/jupyter
 USER dfstools
 WORKDIR $DFSTOOLS_HOME
+RUN mkdir -p $PROJECT_HOME
 SHELL [ "/bin/bash", "-c" ]
 RUN \
   source $VIRTUALENVWRAPPER_SCRIPT \
-  && mkvirtualenv --python=/usr/bin/python3 julia \
-  && pip3 install jupyter nbpresent ipyparallel RISE \
+  && mkvirtualenv --python=/usr/bin/python3 dfstools \
+  && pip3 install jupyter nbpresent ipyparallel RISE virtualenvwrapper \
   && jupyter nbextension install nbpresent --py --overwrite --user \
   && jupyter nbextension enable nbpresent --py --user \
   && jupyter serverextension enable nbpresent --py \
@@ -113,11 +108,14 @@ RUN \
   && jupyter nbextension enable rise --py --user \
   && julia -e 'Pkg.add("IJulia")' \
   && R -e 'IRkernel::installspec()' \
-  && echo "source $VIRTUALENVWRAPPER_SCRIPT" >> ~/.bashrc \
-  && echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python" >> ~/.bashrc \
-  && tar czf $DFSTOOLS_HOME_TARBALL $DFSTOOLS_HOME
+  && echo "source $VIRTUALENVWRAPPER_SCRIPT" >> ~/.bashrc
 
 # Collect scripts
 USER root
-RUN mkdir -p /usr/local/src/Scripts
-COPY Scripts/*.bash /usr/local/src/Scripts/
+RUN mkdir -p /Scripts
+COPY Scripts/*.bash /Scripts/
+
+# Expose notebook port and declare volume
+ENV NOTEBOOK_PORT=8888
+EXPOSE $NOTEBOOK_PORT
+VOLUME $PROJECT_HOME

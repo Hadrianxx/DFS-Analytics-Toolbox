@@ -3,5 +3,5 @@
 # License: MIT
 
 source $VIRTUALENVWRAPPER_SCRIPT \
-  && workon julia \
+  && workon dfstools \
   && jupyter notebook --no-browser --ip=0.0.0.0

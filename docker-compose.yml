@@ -9,11 +9,11 @@ services:
       dockerfile: Dockerfile
     image: docker.io/znmeb/dfstools
     environment:
-      - HOST_HOME_DFSTOOLS
+      - HOST_PROJECT_HOME
       - TERM
     ports:
       - "8888:8888"
     volumes:
-      - $HOST_HOME_DFSTOOLS:/home/dfstools:rw
-    command: /usr/local/src/Scripts/root-startup.bash
+      - $HOST_PROJECT_HOME:/home/dfstools/Projects:rw
+    command: /Scripts/root-startup.bash
     privileged: true
