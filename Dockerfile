@@ -110,12 +110,12 @@ RUN \
   && R -e 'IRkernel::installspec()' \
   && echo "source $VIRTUALENVWRAPPER_SCRIPT" >> ~/.bashrc
 
-# Collect scripts
-USER root
-RUN mkdir -p /Scripts
-COPY Scripts/*.bash /Scripts/
-
 # Expose notebook port and declare volume
 ENV NOTEBOOK_PORT=8888
 EXPOSE $NOTEBOOK_PORT
 VOLUME $PROJECT_HOME
+
+# Collect scripts
+USER root
+RUN mkdir -p /Scripts
+COPY Scripts/*.bash /Scripts/
