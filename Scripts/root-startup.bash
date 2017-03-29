@@ -5,4 +5,4 @@
 echo "DFSTOOLS_HOME is $DFSTOOLS_HOME"
 chown -R dfstools:dfstools $DFSTOOLS_HOME
 ls -Altr $DFSTOOLS_HOME
-su dfstools -c '/usr/local/src/Scripts/dfstools-startup.bash'
+su dfstools -c '/Scripts/dfstools-startup.bash'
