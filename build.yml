@@ -4,6 +4,9 @@
 version: '2.1'
 services:
   dfstools:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: docker.io/znmeb/dfstools
     environment:
       - HOST_PROJECT_HOME
