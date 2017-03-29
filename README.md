@@ -19,10 +19,10 @@ The Docker image contains the platform software and a user home workspace. You c
     git clone https://github.com/znmeb/DFS-Analytics-Toolbox.git
     cd DFS-Analytics-Toolbox
     export HOST_PROJECT_HOME="your host projects directory"
-    docker-compose up --build
+    docker-compose up
     ```
 
-   `docker-compose` will build the image if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.4 GB.
+   `docker-compose` will pull the image from the Docker Hub repository if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.4 GB.
 
 2. When the notebook server is ready, you'll see a line like
 
