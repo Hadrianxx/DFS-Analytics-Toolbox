@@ -4,13 +4,13 @@
 Install Git and a Docker host. You will need both `docker` and `docker-compose`. I develop/test on Fedora Linux 25 with the Fedora-provided `docker` and `docker-compose`. This should work with any `docker` 1.12.6 or later and `docker-compose` 1.9.0 or later.
 
 ## The persistent workspace mechanism
-The Docker image contains the platform software and a user home workspace. You can run the service and upload and download notebooks while the service is running, but `docker-compose` doesn't retain data after it shuts the container down. I've found that a persistent workspace shared with the host is more convenient.
+The Docker image contains the platform software and a user home workspace. You can run the service and upload and download notebooks while the service is running, but `docker-compose` doesn't retain data after it shuts the service down. I've found that a persistent workspace shared with the host is more convenient.
 
     During the image build, `docker` creates a full Jupyter notebook server virtual environment in the `dfstools` user's home directory. `docker` also creates a `VOLUME` - a mount point in Linux terminology - which the notebook user will see as the `Projects` directory on the Jupyter home tab.
 
     At run time, `docker-compose` mounts a host directory onto this `Projects` directory. This is a `bind-mount`. As a result, both the software running in the container and any software running on the host see the same contents in this directory.
 
-    When `docker-compose` brings up the service, it looks at the environment variable `HOST_PROJECT_HOME` to get the host directory name. For example, on my test runs I use `export HOST_PROJECT_HOME="~/snarfblatt"`. If the host directory does not exist, `docker-compose` will create a new empty one.
+    When `docker-compose` brings up the service, it looks at the environment variable `HOST_PROJECT_HOME` to get the host directory name. For example, on my test runs I use `export HOST_PROJECT_HOME="~/dfs_project_home"`. If the host directory does not exist, `docker-compose` will create a new empty one.
 
 ## Usage
 1. Open a terminal / command line window on your Docker host. Type
@@ -22,7 +22,7 @@ The Docker image contains the platform software and a user home workspace. You c
     docker-compose up
     ```
 
-   `docker-compose` will pull the image from the Docker Hub repository if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.4 GB.
+   `docker-compose` will pull the image from the Docker Hub repository if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.3 GB.
 
 2. When the notebook server is ready, you'll see a line like
 
@@ -47,6 +47,16 @@ The Docker image contains the platform software and a user home workspace. You c
     * [Jupyter notebook server](https://jupyter.org/) with Python 3, R and Julia kernels
     * A working [IPython Clusters](https://ipyparallel.readthedocs.io/en/latest/) tab!
     * The [RISE](https://github.com/damianavila/RISE) and [nbpresent](https://github.com/Anaconda-Platform/nbpresent) slideshow tools
+
+## Building the image locally
+If you want to build the image locally instead of pulling it from Docker Hub, open a terminal on the Docker host and enter
+
+    ```
+    git clone https://github.com/znmeb/DFS-Analytics-Toolbox.git
+    cd DFS-Analytics-Toolbox
+    export HOST_PROJECT_HOME="your host projects directory"
+    docker-compose -f build.yml up --build
+    ```
 
 ## TBD (sort of prioritized)
 1. Docker for Windows (Windows 10 Pro Hyper-V) hosting test / documentation
