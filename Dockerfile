@@ -34,16 +34,11 @@ RUN \
   bzip2 \
   curl \
   git \
-  python-dev \
-  python3-dev \
-  python-pip \
-  python3-pip \
-  python-setuptools \
-  python3-setuptools \
   r-base \
   r-base-dev \
   software-properties-common \
   vim-tiny \
+  virtualenvwrapper \
   wget \
   && add-apt-repository -y ppa:marutter/rrutter \
   && add-apt-repository -y ppa:marutter/c2d4u \
