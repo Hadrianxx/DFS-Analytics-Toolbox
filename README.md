@@ -1,7 +1,7 @@
 # DFS Analytics Toolbox - dfstools
 
 ## Linux hosting
-Install Git and a Docker host. You will need both `docker` and `docker-compose`. I develop/test on Fedora Linux 25 with the Fedora-provided `docker` and `docker-compose`. This should work with any `docker` 1.12.6 or later and `docker-compose` 1.9.0 or later.
+Install Git and a Docker host. You will need both `docker` and `docker-compose`. I develop and test on Fedora Linux with the Docker-provided Docker Community Edition (Docker CE). And I regularly test on Windows 10 Pro with Docker CE. I recommend using Docker CE if at all possible, even on Linux.
 
 ## The persistent workspace mechanism
 The Docker image contains the platform software and a user home workspace. You can run the service and upload and download notebooks while the service is running, but `docker-compose` doesn't retain data after it shuts the container down. I've found that a persistent workspace shared with the host is more convenient.
@@ -10,7 +10,7 @@ The Docker image contains the platform software and a user home workspace. You c
 
     At run time, `docker-compose` mounts a host directory onto this `Projects` directory. This is a `bind-mount`. As a result, both the software running in the container and any software running on the host see the same contents in this directory.
 
-    When `docker-compose` brings up the service, it looks at the environment variable `HOST_PROJECT_HOME` to get the host directory name. For example, on my test runs I use `export HOST_PROJECT_HOME="~/snarfblatt"`. If the host directory does not exist, `docker-compose` will create a new empty one.
+    When `docker-compose` brings up the service, it looks at the environment variable `HOST_PROJECT_HOME` to get the host directory name. For example, on my test runs I use `export HOST_PROJECT_HOME="~/dfs_projects"`. If the host directory does not exist, `docker-compose` will create a new empty one.
 
 ## Usage
 1. Open a terminal / command line window on your Docker host. Type
