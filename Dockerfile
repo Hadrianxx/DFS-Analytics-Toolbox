@@ -66,11 +66,6 @@ RUN \
   r-cran-xml2 \
   && apt-get clean
 
-# Python virtual environment / project manager
-RUN \
-  pip install --upgrade pip \
-  && pip install virtualenvwrapper
-
 # Install the rest of the system-level components
 COPY Rprofile.site /etc/R/
 ENV JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
@@ -83,7 +78,7 @@ RUN \
 # Install user components
 ENV \
   DFSTOOLS_HOME=/home/dfstools \
-  VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh \
+  VIRTUALENVWRAPPER_SCRIPT=/usr/share/virtualenvwrapper/virtualenvwrapper.sh \
   PROJECT_HOME=home/dfstools/Projects \
   WORKON_HOME=/home/dfstools/.virtualenvs \
   JUPYTER=/home/dfstools/.virtualenvs/dfstools/bin/jupyter
