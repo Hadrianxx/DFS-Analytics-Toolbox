@@ -1,0 +1,42 @@
+#! /bin/bash
+
+# Uninstall any old versions
+echo "Removing any old Docker packages"
+echo "You can ignore errors"
+sudo dnf remove docker \
+   docker-common \
+   container-selinux \
+   docker-selinux \
+   docker-engine \
+   docker-compose
+
+# Set up the Docker CE repository on Fedora:
+echo "Adding the Docker CE repository"
+sudo dnf -y install dnf-plugins-core
+sudo dnf config-manager \
+  --add-repo \
+  https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf makecache fast
+
+# Install the latest version of Docker CE on Fedora:
+echo "Installing Docker CE (stable)"
+sudo dnf -y install \
+  docker-ce \
+  git
+
+# Docker Compose
+echo "Installing Docker Compose 1.11.2"
+curl -Ls https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` \
+  > docker-compose
+sudo mv docker-compose /usr/local/bin
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Start Docker:
+echo "Enabling and starting Docker"
+sudo cp daemon.json /etc/docker # specify storage driver
+sudo systemctl enable docker
+sudo systemctl start docker
+
+# Test your installation:
+echo "Testing it!"
+sudo docker run hello-world
