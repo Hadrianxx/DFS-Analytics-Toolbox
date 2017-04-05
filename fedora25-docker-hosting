@@ -32,7 +32,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 # Start Docker:
 echo "Enabling and starting Docker"
-sudo cp daemon.json /etc/docker # specify storage driver
+sudo mkdir -p /etc/docker/
+sudo cp daemon.json /etc/docker/ # specify storage driver
 sudo systemctl enable docker
 sudo systemctl start docker
 
