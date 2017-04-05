@@ -19,10 +19,10 @@ sudo yum-config-manager \
 sudo yum makecache fast
 
 # Install the latest version of Docker CE on CentOS:
-echo "Installing Docker CE and git"
+echo "Installing Docker CE and sudo"
 sudo yum -y install \
   docker-ce \
-  git
+  sudo
 
 # Docker Compose
 echo "Installing Docker Compose 1.11.2"
