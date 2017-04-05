@@ -19,10 +19,9 @@ sudo dnf config-manager \
 sudo dnf makecache fast
 
 # Install the latest version of Docker CE on Fedora:
-echo "Installing Docker CE and sudo"
+echo "Installing Docker CE"
 sudo dnf -y install \
-  docker-ce \
-  sudo
+  docker-ce
 
 # Docker Compose
 echo "Installing Docker Compose 1.11.2"

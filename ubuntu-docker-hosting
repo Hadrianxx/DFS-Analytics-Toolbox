@@ -23,10 +23,9 @@ sudo add-apt-repository \
 sudo apt-get update
 
 # Install the latest version of Docker CE on Ubuntu:
-echo "Installing Docker CE and sudo"
+echo "Installing Docker CE"
 sudo apt-get -y install \
-  docker-ce \
-  sudo
+  docker-ce
 
 # Docker Compose
 echo "Installing Docker Compose 1.11.2"
