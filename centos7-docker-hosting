@@ -3,24 +3,24 @@
 # Uninstall any old versions
 echo "Removing any old Docker packages"
 echo "You can ignore errors"
-sudo dnf remove docker \
-   docker-common \
-   container-selinux \
-   docker-selinux \
-   docker-engine \
-   docker-compose
+sudo yum remove docker \
+  docker-common \
+  container-selinux \
+  docker-selinux \
+  docker-engine \
+  docker-compose
 
-# Set up the Docker CE repository on Fedora:
+# Set up the Docker CE repository on CentOS:
 echo "Adding the Docker CE repository"
-sudo dnf -y install dnf-plugins-core
-sudo dnf config-manager \
+sudo yum install -y yum-utils
+sudo yum-config-manager \
   --add-repo \
-  https://download.docker.com/linux/fedora/docker-ce.repo
-sudo dnf makecache fast
+  https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum makecache fast
 
-# Install the latest version of Docker CE on Fedora:
+# Install the latest version of Docker CE on CentOS:
 echo "Installing Docker CE and git"
-sudo dnf -y install \
+sudo yum -y install \
   docker-ce \
   git
 
