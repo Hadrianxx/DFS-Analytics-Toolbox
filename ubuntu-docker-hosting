@@ -44,3 +44,9 @@ sudo systemctl start docker
 # Test your installation:
 echo "Testing it!"
 sudo docker run hello-world
+
+# Configure "docker" group
+echo "Adding ${USER} to the 'docker' group"
+sudo groupadd docker
+sudo usermod -aG docker ${USER}
+echo "Log out and back in to join the 'docker' group."

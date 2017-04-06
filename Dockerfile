@@ -79,7 +79,7 @@ RUN \
 ENV \
   DFSTOOLS_HOME=/home/dfstools \
   VIRTUALENVWRAPPER_SCRIPT=/usr/share/virtualenvwrapper/virtualenvwrapper.sh \
-  PROJECT_HOME=home/dfstools/Projects \
+  PROJECT_HOME=/home/dfstools/Projects \
   WORKON_HOME=/home/dfstools/.virtualenvs \
   JUPYTER=/home/dfstools/.virtualenvs/dfstools/bin/jupyter
 USER dfstools
