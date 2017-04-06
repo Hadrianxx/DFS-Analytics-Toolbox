@@ -15,5 +15,6 @@ services:
       - "8888:8888"
     volumes:
       - $HOST_PROJECT_HOME:/home/dfstools/Projects:rw
-    command: /Scripts/dfstools-startup.bash
-    user: dfstools
+    command: /Scripts/root-startup.bash
+    user: root
+    privileged: true
