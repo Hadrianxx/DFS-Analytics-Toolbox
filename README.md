@@ -27,6 +27,9 @@
 
     where <OS> is `centos7`, `fedora25`, `debian` or `ubuntu`.
 
+## Windows 10 Pro / Docker for Windows hosting
+TBD
+
 ## The persistent workspace mechanism
 The Docker image contains the platform software and a user home workspace. You can run the service and upload and download notebooks while the service is running, but `docker-compose` doesn't retain data after it shuts the service down. I've found that a persistent workspace shared with the host is more convenient.
 
@@ -69,7 +72,6 @@ The Docker image contains the platform software and a user home workspace. You c
 * A `dfstools` virtual environment in the `dfstools` home directory containing
     * [Jupyter notebook server](https://jupyter.org/) with Python 3, R and Julia kernels
     * A working [IPython Clusters](https://ipyparallel.readthedocs.io/en/latest/) tab!
-    * The [RISE](https://github.com/damianavila/RISE) and [nbpresent](https://github.com/Anaconda-Platform/nbpresent) slideshow tools
 
 ## Building the image locally
 If you want to build the image locally instead of pulling it from Docker Hub, open a terminal on the Docker host and enter
