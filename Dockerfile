@@ -105,4 +105,3 @@ VOLUME $PROJECT_HOME
 USER root
 RUN mkdir -p /Scripts
 COPY Scripts/*.bash /Scripts/
-r-cran-effects - GNU R graphical and tabular effects display for glm models
