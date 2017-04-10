@@ -59,6 +59,7 @@ RUN \
   r-cran-purrr \
   r-cran-readr \
   r-cran-readxl \
+  r-cran-rsqlite \
   r-cran-stringr \
   r-cran-tibble \
   r-cran-rvest \
@@ -104,3 +105,4 @@ VOLUME $PROJECT_HOME
 USER root
 RUN mkdir -p /Scripts
 COPY Scripts/*.bash /Scripts/
+r-cran-effects - GNU R graphical and tabular effects display for glm models
