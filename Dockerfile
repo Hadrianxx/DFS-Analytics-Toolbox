@@ -9,7 +9,6 @@ RUN \
   echo 'deb http://cran.rstudio.com/bin/linux/ubuntu xenial/' >> /etc/apt/sources.list \
   && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 \
   && apt-get update \
-  && apt-get upgrade -y \
   && apt-get install -qqy --no-install-recommends \
   build-essential \
   bzip2 \
