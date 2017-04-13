@@ -47,7 +47,7 @@ The Docker image contains the platform software and a user home workspace. You c
     sudo docker-compose up
     ```
 
-   `docker-compose` will pull the image from the Docker Hub repository if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.3 GB.
+   `docker-compose` will pull the image from the Docker Hub repository if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.1 GB.
 
 2. When the notebook server is ready, you'll see a line like
 
