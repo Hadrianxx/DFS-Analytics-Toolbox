@@ -59,6 +59,13 @@ The Docker image contains the platform software and a user home workspace. You c
 
     Open the URL in your browser and you'll be using the notebook server. On my GNOME terminal, you can right-click on the lick and select "Open Link"!
 
+3. Verifying that everything works
+
+    * Press the "New" button and verify that you can start a new Julia, Python 3 and R notebook.
+    * Press the "New" button and verify that you can start a new Terminal session.
+    * Create and edit a file in the "Projects" folder and verify that the file is mirrored in the host directory that's mounted on "Projects" in the container.
+    * Go to the `IPython Clusters` tab and verify that you can start and stop the cluster engines.
+
 3. When you're done, log out of all your notebook browser windows / tabs and press `CTRL-C` in the terminal. The notebook server will shut down. Your workspace will be saved to the host directory specified by `HOST_PROJECT_HOME`. To restart the notebook server, just make sure the `HOST_PROJECT_HOME` environment variable is set and type `docker-compose up`.
 
 ## What's in the box?
