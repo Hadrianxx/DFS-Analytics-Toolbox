@@ -14,7 +14,6 @@
 
 3. After the reboot, install both "git" and "sudo" if they aren't installed already. Then make sure you're in the systemm administration group. On CentOS and Fedora this is "wheel" and on Debian and Ubuntu it's "sudo". You should be in the group already on CentOS, Fedora and Ubuntu but you'll have to join it on Debian and you should check it everywhere.
 
-
 4. If you had to add yourself to the administration group, log out and back in again. Just opening a new terminal won't work; you'll need to log out to the display manager and back in again.
 
 5. Open a terminal window and type
@@ -89,3 +88,6 @@ If you want to build the image locally instead of pulling it from Docker Hub, op
 1. [PostgreSQL](https://store.docker.com/images/022689bf-dfd8-408f-9e1c-19acac32e57b?tab=description) back end
 1. [Redis](https://store.docker.com/images/1f6ef28b-3e48-4da1-b838-5bd8710a2053?tab=description) back end
 1. And, of course, actual DFS analytics content!
+
+## Patreon link
+I'm on Patreon now - link is <https://www.patreon.com/znmeb>
