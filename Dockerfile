@@ -25,27 +25,7 @@ RUN \
   && add-apt-repository -y ppa:marutter/c2d4u \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
-  r-cran-broom \
   r-cran-devtools \
-  r-cran-dplyr \
-  r-cran-forcats \
-  r-cran-ggplot2 \
-  r-cran-haven \
-  r-cran-httr \
-  r-cran-hms \
-  r-cran-jsonlite \
-  r-cran-lubridate \
-  r-cran-magrittr \
-  r-cran-modelr \
-  r-cran-purrr \
-  r-cran-readr \
-  r-cran-readxl \
-  r-cran-rsqlite \
-  r-cran-stringr \
-  r-cran-tibble \
-  r-cran-rvest \
-  r-cran-tidyr \
-  r-cran-xml2 \
   && apt-get clean
 
 # Install the rest of the system-level components
