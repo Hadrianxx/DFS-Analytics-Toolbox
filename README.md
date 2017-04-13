@@ -79,7 +79,7 @@ The Docker image contains the platform software and a user home workspace. You c
     * [Jupyter notebook server](https://jupyter.org/) with Python 3, R and Julia kernels
     * A working [IPython Clusters](https://ipyparallel.readthedocs.io/en/latest/) tab!
 
-Note that the only TeXLive / LaTeX installed is those pieces that come in as dependencies of `R` and `pandoc`. So there will be some PDFs you can't generate. But all the HTML documents you can make with the notebooks should work; if they don't, file an issue. And it's a one-line command to install TeXLive if you need it.
+Note that the only TeXLive / LaTeX installed is those pieces that come in as dependencies of `R`. So there will be some PDFs you can't generate via R, and the notebook download-as-pdf won't work. But all the HTML documents you can make with the notebooks should work; if they don't, file an issue. And it's a one-line command to install TeXLive if you need it.
 
 ## Building the image locally
 If you want to build the image locally instead of pulling it from Docker Hub, open a terminal on the Docker host and enter

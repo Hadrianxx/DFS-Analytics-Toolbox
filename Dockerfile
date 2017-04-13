@@ -31,7 +31,7 @@ RUN \
 COPY Rprofile.site /etc/R/
 ENV JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
 RUN \
-  R -e "install.packages(c('tidyverse', 'repr', 'IRdisplay'), quiet = TRUE)" \
+  R -e "install.packages(c('repr', 'IRdisplay'), quiet = TRUE)" \
   && R -e "devtools::install_github('IRkernel/IRkernel', quiet = TRUE)" \
   && curl -Ls $JULIA_TARBALL | tar xfz - --strip-components=1 --directory=/usr/local \
   && useradd -c "DFS Analytics Toolbox" -u 1000 -s /bin/bash -m dfstools
