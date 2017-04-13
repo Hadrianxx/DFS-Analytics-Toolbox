@@ -4,25 +4,6 @@
 FROM docker.io/ubuntu:xenial
 MAINTAINER M. Edward (Ed) Borasky <znmeb@znmeb.net>
 
-# Set up locales
-RUN \
-  echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
-  && locale-gen \
-  && update-locale LANG=en_US.UTF-8 \
-  && update-locale LC_CTYPE=en_US.UTF-8 \
-  && update-locale LC_NUMERIC=en_US.UTF-8 \
-  && update-locale LC_TIME=en_US.UTF-8 \
-  && update-locale LC_COLLATE=en_US.UTF-8 \
-  && update-locale LC_MONETARY=en_US.UTF-8 \
-  && update-locale LC_MESSAGES=en_US.UTF-8 \
-  && update-locale LC_PAPER=en_US.UTF-8 \
-  && update-locale LC_NAME=en_US.UTF-8 \
-  && update-locale LC_ADDRESS=en_US.UTF-8 \
-  && update-locale LC_TELEPHONE=en_US.UTF-8 \
-  && update-locale LC_MEASUREMENT=en_US.UTF-8 \
-  && update-locale LC_IDENTIFICATION=en_US.UTF-8 \
-  && update-locale LC_ALL=en_US.UTF-8
-
 # Install base Ubuntu packages
 RUN \
   echo 'deb http://cran.rstudio.com/bin/linux/ubuntu xenial/' >> /etc/apt/sources.list \
