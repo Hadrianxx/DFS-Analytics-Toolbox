@@ -73,7 +73,7 @@ The Docker image contains the platform software and a user home workspace. You c
 * [Ubuntu 16.04.x LTS "Xenial Xerus"](https://store.docker.com/images/414e13de-f1ba-40d0-9867-08f2e5884b3f?tab=description)
 * [Python `virtualenvwrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/)
 * [R repositories from CRAN's Ubuntu page](https://cran.r-project.org/bin/linux/ubuntu/)
-* R, [devtools](https://github.com/hadley/devtools), [the `tidyverse`](http://tidyverse.org/) and the [R kernel for Jupyter notebooks](https://irkernel.github.io/)
+* R, [devtools](https://github.com/hadley/devtools), and the [R kernel for Jupyter notebooks](https://irkernel.github.io/)
 * Julia from the [Julia binary download page](http://julialang.org/downloads/) and [the `IJulia` kernel Julia package](https://github.com/JuliaLang/IJulia.jl)
 * A `dfstools` virtual environment in the `dfstools` home directory containing
     * [Jupyter notebook server](https://jupyter.org/) with Python 3, R and Julia kernels
