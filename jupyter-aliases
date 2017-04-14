@@ -1,0 +1,4 @@
+export CONDA_BINARIES=$HOME/.julia/v0.5/Conda/deps/usr/bin
+alias activate-jupyter="source $CONDA_BINARIES/activate jupyter"
+alias deactivate-jupyter="source $CONDA_BINARIES/deactivate jupyter"
+alias conda="$CONDA_BINARIES/conda"
