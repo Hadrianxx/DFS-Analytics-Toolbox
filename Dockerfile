@@ -50,8 +50,7 @@ SHELL [ "/bin/bash", "-c" ]
 RUN \
   source $VIRTUALENVWRAPPER_SCRIPT \
   && mkvirtualenv --python=/usr/bin/python3 dfstools \
-  && pip3 install jupyter ipyparallel virtualenvwrapper \
-  && ipcluster nbextension enable --user \
+  && pip3 install jupyter virtualenvwrapper \
   && julia -e 'Pkg.add("IJulia")' \
   && R -e 'IRkernel::installspec()' \
   && echo "source $VIRTUALENVWRAPPER_SCRIPT" >> ~/.bashrc
