@@ -11,6 +11,8 @@
 6. Type `conda create --yes --name jupyter python=3 jupyter r-irkernel`. This will also take some time.
 7. Close the Anaconda prompt window.
 
+Note that neither the "Clusters" feature nor the "Terminal" feature work on Windows.
+
 ### Usage
 1. Open the Anaconda prompt and type `activate jupyter`.
 2. Type `jupyter notebook`. The default browser will open a notebook.
