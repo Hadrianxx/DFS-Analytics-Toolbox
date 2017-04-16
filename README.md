@@ -7,8 +7,8 @@
 2. Start Julia from the `Start` menu.
 3. Type `Pkg.update(); Pkg.add("IJulia")`. This will take some time.
 4. Close the Julia window.
-5. Open the Anaconda prompt from the `Start` menu.
-6. Type `conda create --yes --name jupyter python=3 jupyter r-irkernel`. This will also take some time.
+5. The `IJulia` install adds an Anaconda command window to the `Start` menu. Open the Anaconda prompt from the `Start` menu.
+6. Type `conda create --yes --name jupyter python=3 jupyter r-devtools r-irkernel r-roxygen2 r-tidyverse`. This will also take some time.
 7. Close the Anaconda prompt window.
 
 ### Usage
