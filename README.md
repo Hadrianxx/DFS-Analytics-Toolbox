@@ -11,6 +11,8 @@
 6. Type `conda create --yes --name jupyter python=3 jupyter r-devtools r-irkernel r-roxygen2 r-tidyverse`. This will also take some time.
 7. Close the Anaconda prompt window.
 
+Note that neither the "Clusters" feature nor the "Terminal" feature work on Windows.
+
 ### Usage
 1. Open the Anaconda prompt and type `activate jupyter`.
 2. Type `jupyter notebook`. The default browser will open a notebook.
@@ -38,9 +40,8 @@ I'm on Patreon now - link is <https://www.patreon.com/znmeb>
 If you've been here before, you may be wondering what happened to all the grand plans about Docker images. Briefly, it works fine on Linux hosts and that code is still here in the Docker directory. I'm still maintaining it and it's close to what I use on a daily basis.
 
 However, it turns out to be a gigantic hassle to install Docker hosting on Windows. For openers, there are two versions:
-
-    1. The new `Docker Community Edition`, which only works on Windows 10 Pro with Hyper-V, and
-    2. The old `Docker Toolbox`, which runs on Windows 7 or later and carries VirtualBox and Git for Windows.
+1. The new Docker Community Edition, which only works on Windows 10 Pro with Hyper-V, and
+2. The old Docker Toolbox, which runs on Windows 7 or later and carries VirtualBox and Git for Windows.
 
 I've gotten the Docker image to work a few times with the Windows 10 Pro / Docker Community Edition setup, but I had so many mysterious hangs that I gave up on troubleshooting it and dropped back to the Julia / Anaconda solution you see here.
 
