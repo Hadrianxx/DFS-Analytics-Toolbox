@@ -8,11 +8,13 @@
     * Debian "jessie", or
     * Ubuntu "Xenial Xerus".
 
-    Make sure you've made yourself an administrator on Fedora and CentOS during the install. You'll be an administrator by default on Ubuntu and you have to do it after the install on Debian.
+    Make sure you've made yourself an administrator on Fedora and CentOS during the install. You'll be an administrator by default on Ubuntu. 
+
+    On Debian, you will be asked if you want to allow `root` logins. At this point, say `No` and you'll be set up as an administrator.
 
 2. When the install is done, update all the software to the latest packages and then reboot. All four have a "Software" application that you can use for this rather than doing it on the command line.
 
-3. After the reboot, install both "git" and "sudo" if they aren't installed already. Then make sure you're in the systemm administration group. On CentOS and Fedora this is "wheel" and on Debian and Ubuntu it's "sudo". You should be in the group already on CentOS, Fedora and Ubuntu but you'll have to join it on Debian and you should check it everywhere.
+3. After the reboot, install both "git" and "sudo" if they aren't installed already. Then make sure you're in the systemm administration group. On CentOS and Fedora this is "wheel" and on Debian and Ubuntu it's "sudo". You should be in the group already, but you should check it.
 
 4. If you had to add yourself to the administration group, log out and back in again. Just opening a new terminal won't work; you'll need to log out to the display manager and back in again.
 
@@ -20,7 +22,7 @@
 
     ```
     git clone https://github.com/znmeb/DFS-Analytics-Toolbox
-    cd DFS-Analytics-Toolbox
+    cd DFS-Analytics-Toolbox/Docker
     ./<OS>-docker-hosting
     ```
 
@@ -29,8 +31,11 @@
 ## Windows 10 Pro / Docker for Windows hosting
 TBD
 
+## Windows 7+ Docker Toolbox hosting
+TBD
+
 ## The persistent workspace mechanism
-The Docker image contains the platform software and a user home workspace. You can run the service and upload and download notebooks while the service is running, but `docker-compose` doesn't retain data after it shuts the service down. I've found that a persistent workspace shared with the host is more convenient.
+The Docker image contains the platform software and a user home directory. You can run the service and upload and download notebooks while the service is running, but `docker-compose` doesn't retain data after it shuts the service down. I've found that a persistent workspace shared with the host is more convenient.
 
     During the image build, `docker` creates a full Jupyter notebook server virtual environment in the `dfstools` user's home directory. `docker` also creates a `VOLUME` - a mount point in Linux terminology - which the notebook user will see as the `Projects` directory on the Jupyter home tab.
 
@@ -47,7 +52,7 @@ The Docker image contains the platform software and a user home workspace. You c
     sudo docker-compose up
     ```
 
-   `docker-compose` will pull the image from the Docker Hub repository if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.1 GB.
+   `docker-compose` will pull the image from the Docker Hub repository <https://hub.docker.com/r/znmeb/dfstools/> if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.1 GB.
 
 2. When the notebook server is ready, you'll see a line like
 
