@@ -47,7 +47,7 @@ The Docker image contains the platform software and a user home directory. You c
 1. Open a terminal / command line window on your Docker host. Type
 
     ```
-    cd DFS-Analytics-Toolbox
+    cd DFS-Analytics-Toolbox/Docker
     export HOST_PROJECT_HOME="your host projects directory"
     sudo docker-compose up
     ```
@@ -82,7 +82,6 @@ The Docker image contains the platform software and a user home directory. You c
 * Julia from the [Julia binary download page](http://julialang.org/downloads/) and [the `IJulia` kernel Julia package](https://github.com/JuliaLang/IJulia.jl)
 * A `dfstools` virtual environment in the `dfstools` home directory containing
     * [Jupyter notebook server](https://jupyter.org/) with Python 3, R and Julia kernels
-    * A working [IPython Clusters](https://ipyparallel.readthedocs.io/en/latest/) tab!
 
 Note that the only TeXLive / LaTeX installed is those pieces that come in as dependencies of `R`. So there will be some PDFs you can't generate via R, and the notebook download-as-pdf won't work. But all the HTML documents you can make with the notebooks should work; if they don't, file an issue. And it's a one-line command to install TeXLive if you need it.
 
