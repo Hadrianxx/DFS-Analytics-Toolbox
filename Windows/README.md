@@ -12,3 +12,14 @@ On a Windows 7+ system, a command script that
 * Non-goal: No LaTeX / PDFs ... MikTeX is way overkill for the kinds of documents I'm talking about here.
 * Non-goal: No Docker!!!
 
+## Implementation
+1. Install R.
+2. Install the "installr" and "devtools" packages.
+3. Install the other executables via installr:
+    * Rtools
+    * Git for Windows
+    * RStudio
+    * Miniconda3
+    * Julia
+4. Install the IRkernel package and its dependencies
+5. Create a Conda jupyter environment
