@@ -1,0 +1,6 @@
+devtools::install_github("IRkernel/IRkernel")
+library(installr)
+install.RStudio()
+install.URL("https://cran.rstudio.com/bin/windows/Rtools/Rtools34.exe")
+install.URL("https://repo.continuum.io/miniconda/Miniconda3-latest-Windows-x86_64.exe")
+install.URL("https://s3.amazonaws.com/julialang/bin/winnt/x64/0.5/julia-0.5.1-win64.exe")
