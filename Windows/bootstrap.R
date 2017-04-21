@@ -1,5 +1,8 @@
 install.packages(c("devtools", "installr", "stringr"))
 devtools::install_github("IRkernel/IRkernel")
 library(installr)
+install.RStudio()
+install.Rtools()
+install.git()
 install.URL("https://s3.amazonaws.com/julialang/bin/winnt/x64/0.5/julia-0.5.1-win64.exe")
 install.URL("https://repo.continuum.io/miniconda/Miniconda3-latest-Windows-x86_64.exe")
