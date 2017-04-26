@@ -28,6 +28,7 @@ RUN \
   && apt-get clean
 
 # Install the rest of the system-level components
+RUN mkdir -p /TMPDIR
 COPY Rprofile.site /etc/R/
 ENV JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
 RUN \
