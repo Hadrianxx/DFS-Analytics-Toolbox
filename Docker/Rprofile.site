@@ -9,19 +9,6 @@
 # and start a new session
 
 Sys.setenv(R_PAPERSIZE = "letter")
-Sys.setenv(LANG = "en_US.UTF-8")
-Sys.setenv(LC_CTYPE = "en_US.UTF-8")
-Sys.setenv(LC_NUMERIC = "en_US.UTF-8")
-Sys.setenv(LC_TIME = "en_US.UTF-8")
-Sys.setenv(LC_COLLATE = "en_US.UTF-8")
-Sys.setenv(LC_MONETARY = "en_US.UTF-8")
-Sys.setenv(LC_MESSAGES = "en_US.UTF-8")
-Sys.setenv(LC_PAPER = "en_US.UTF-8")
-Sys.setenv(LC_NAME = "en_US.UTF-8")
-Sys.setenv(LC_ADDRESS = "en_US.UTF-8")
-Sys.setenv(LC_TELEPHONE = "en_US.UTF-8")
-Sys.setenv(LC_MEASUREMENT = "en_US.UTF-8")
-Sys.setenv(LC_IDENTIFICATION = "en_US.UTF-8")
 Sys.setenv(TMPDIR = "/TMPDIR")
 
 # make library directory if we're not 'root'

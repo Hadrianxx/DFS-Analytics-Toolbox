@@ -35,43 +35,35 @@ TBD
 TBD
 
 ## The persistent workspace mechanism
-The Docker image contains the platform software and a user home directory. You can run the service and upload and download notebooks while the service is running, but `docker-compose` doesn't retain data after it shuts the service down. I've found that a persistent workspace shared with the host is more convenient.
+The Docker image contains the platform software and a user home directory. You can run the service and upload and download notebooks while the service is running, but Docker doesn't retain data after the container exits. So I've found that a persistent workspace shared with the host is convenient.
 
-    During the image build, `docker` creates a full Jupyter notebook server virtual environment in the `dfstools` user's home directory. `docker` also creates a `VOLUME` - a mount point in Linux terminology - which the notebook user will see as the `Projects` directory on the Jupyter home tab.
+    During the image build, Docker creates a full Jupyter notebook server virtual environment in the `dfstools` user's home directory `/home/dfstools`. Docker also creates a directory `/home/dfstools/Projects` and defines it as a `VOLUME` - a mount point in Linux terminology.
 
-    At run time, `docker-compose` mounts a host directory onto this `Projects` directory. This is a `bind-mount`. As a result, both the software running in the container and any software running on the host see the same contents in this directory.
-
-    When `docker-compose` brings up the service, it looks at the environment variable `HOST_PROJECT_HOME` to get the host directory name. For example, on my test runs I use `export HOST_PROJECT_HOME="~/dfs_project_home"`. If the host directory does not exist, `docker-compose` will create a new empty one.
+    At run time, Docker can mount a host directory onto this `Projects` directory; this is a `bind-mount`. As a result, both the software running in the container and any software running on the host see the same contents in this directory. A notebook user will see it as the `Projects` directory on the Jupyter home tab.
 
 ## Usage
-1. Open a terminal / command line window on your Docker host. Type
+1. Open a terminal / command line window on your Docker host. Edit the file `DFS-Analytics-Toolbox/Docker/run.bash`; change the directory in the `export` statement to the directory you want to use for your persistent `Projects` workspace.
+
+2. `cd DFS-Analytics-Toolbox/Docker; ./run.bash`. Docker will pull the image from the Docker Hub repository <https://hub.docker.com/r/znmeb/dfstools/> if it's not on your machine, then run it in the `dfstools` container. The current image is about 1.1 GB.
+
+3. When the notebook server is ready, you'll see a line like
 
     ```
-    cd DFS-Analytics-Toolbox/Docker
-    export HOST_PROJECT_HOME="your host projects directory"
-    sudo docker-compose up
-    ```
-
-   `docker-compose` will pull the image from the Docker Hub repository <https://hub.docker.com/r/znmeb/dfstools/> if it's not on your machine, then bring up the `dfstools` service. The current image is about 1.1 GB.
-
-2. When the notebook server is ready, you'll see a line like
-
-    ```
-    dfstools_1  |     Copy/paste this URL into your browser when you connect for the first time,
-    dfstools_1  |     to login with a token:
-    dfstools_1  |         http://0.0.0.0:8888/?token=60cf8c8638b19454b02f603f3b7ea8420ee1eb7c5841a381
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://0.0.0.0:8888/?token=22e42a31c96fed8371b416301fce2f1facf68698c9196032
     ```
 
     Open the URL in your browser and you'll be using the notebook server. On my GNOME terminal, you can right-click on the lick and select "Open Link"!
 
-3. Verifying that everything works
+4. Verifying that everything works:
 
     * Press the "New" button and verify that you can start a new Julia, Python 3 and R notebook.
     * Press the "New" button and verify that you can start a new Terminal session.
     * Create and edit a file in the "Projects" folder and verify that the file is mirrored in the host directory that's mounted on "Projects" in the container.
     * Go to the `IPython Clusters` tab and verify that you can start and stop the cluster engines.
 
-3. When you're done, log out of all your notebook browser windows / tabs and press `CTRL-C` in the terminal. The notebook server will shut down. Your workspace will be saved to the host directory specified by `HOST_PROJECT_HOME`. To restart the notebook server, just make sure the `HOST_PROJECT_HOME` environment variable is set and type `docker-compose up`.
+5. When you're done, log out of all your notebook browser windows / tabs and press `CTRL-C` in the terminal. The notebook server will shut down. Your workspace will be saved to the host directory specified by `HOST_PROJECT_HOME`. To restart the notebook server, just `cd DFS-Analytics-Toolbox/Docker; ./run.bash` again.
 
 ## What's in the box?
 * Licensing: this repository is MIT licensed. However, many of the components have other licenses.
@@ -81,18 +73,13 @@ The Docker image contains the platform software and a user home directory. You c
 * R, [devtools](https://github.com/hadley/devtools), and the [R kernel for Jupyter notebooks](https://irkernel.github.io/)
 * Julia from the [Julia binary download page](http://julialang.org/downloads/) and [the `IJulia` kernel Julia package](https://github.com/JuliaLang/IJulia.jl)
 * A `dfstools` virtual environment in the `dfstools` home directory containing
-    * [Jupyter notebook server](https://jupyter.org/) with Python 3, R and Julia kernels
+    * [Jupyter notebook server](https://jupyter.org/) with Python 3, R and Julia kernels, and
+    * [ipyparallel](http://ipyparallel.readthedocs.io/en/latest/).
 
-Note that the only TeXLive / LaTeX installed is those pieces that come in as dependencies of `R`. So there will be some PDFs you can't generate via R, and the notebook download-as-pdf won't work. But all the HTML documents you can make with the notebooks should work; if they don't, file an issue. And it's a one-line command to install TeXLive if you need it.
+Note that the only TeXLive / LaTeX installed is those pieces that come in as dependencies of `R`. So there will be some PDFs you can't generate via R, and the notebook download-as-pdf won't work. But all the HTML documents you can make with the notebooks should work; if they don't, file an issue.
 
 ## Building the image locally
-If you want to build the image locally instead of pulling it from Docker Hub, open a terminal on the Docker host and enter
-
-    ```
-    cd DFS-Analytics-Toolbox
-    export HOST_PROJECT_HOME="your host projects directory"
-    sudo docker-compose -f build.yml up --build
-    ```
+If you want to build the image locally instead of pulling it from Docker Hub, open a terminal on the Docker host and enter `cd DFS-Analytics-Toolbox/Docker; ./build.bash`.
 
 ## TBD (sort of prioritized)
 1. Docker for Windows (Windows 10 Pro Hyper-V) hosting test / documentation

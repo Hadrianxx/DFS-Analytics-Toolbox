@@ -23,17 +23,8 @@ echo "Installing Docker CE"
 sudo dnf -y install \
   docker-ce
 
-# Docker Compose
-echo "Installing Docker Compose 1.11.2"
-curl -Ls https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` \
-  > docker-compose
-sudo mv docker-compose /usr/local/bin
-sudo chmod +x /usr/local/bin/docker-compose
-
 # Start Docker:
 echo "Enabling and starting Docker"
-sudo mkdir -p /etc/docker/
-sudo cp daemon.json /etc/docker/ # specify storage driver
 sudo systemctl enable docker
 sudo systemctl start docker
 

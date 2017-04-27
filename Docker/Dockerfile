@@ -28,6 +28,7 @@ RUN \
   && apt-get clean
 
 # Install the rest of the system-level components
+RUN mkdir -p /TMPDIR
 COPY Rprofile.site /etc/R/
 ENV JULIA_TARBALL=https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
 RUN \
@@ -50,7 +51,8 @@ SHELL [ "/bin/bash", "-c" ]
 RUN \
   source $VIRTUALENVWRAPPER_SCRIPT \
   && mkvirtualenv --python=/usr/bin/python3 dfstools \
-  && pip3 install jupyter virtualenvwrapper \
+  && pip3 install jupyter virtualenvwrapper ipyparallel \
+  && ipcluster nbextension enable --user \
   && julia -e 'Pkg.add("IJulia")' \
   && R -e 'IRkernel::installspec()' \
   && echo "source $VIRTUALENVWRAPPER_SCRIPT" >> ~/.bashrc

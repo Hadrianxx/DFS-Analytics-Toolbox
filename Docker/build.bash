@@ -1,3 +1,3 @@
 #! /bin/bash
 
-docker-compose -f build.yml build
+docker build -f Dockerfile -t docker.io/znmeb/dfstools:latest .

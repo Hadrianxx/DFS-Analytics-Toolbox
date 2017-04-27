@@ -27,13 +27,6 @@ echo "Installing Docker CE"
 sudo apt-get -y install \
   docker-ce
 
-# Docker Compose
-echo "Installing Docker Compose 1.11.2"
-curl -Ls https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` \
-  > docker-compose
-sudo mv docker-compose /usr/local/bin
-sudo chmod +x /usr/local/bin/docker-compose
-
 # Start Docker:
 echo "Enabling and starting Docker"
 sudo systemctl enable docker
